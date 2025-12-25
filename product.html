@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop Products - Hunter Chicken</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <style>
+    /* --- CSS DASAR --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; scroll-behavior: smooth; }
+    body { background-color: #0c5b5b; color: #fff; padding-bottom: 0; overflow-x: hidden; }
+
+    /* HEADER UTAMA */
+    .header {
+      width: 100%; padding: 50px 20px;
+      background: linear-gradient(120deg, #4bffff, #0c5b5b);
+      display: flex; justify-content: center; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .header::before {
+      content: ""; position: absolute; inset: 0;
+      background: url("img/name.png") no-repeat center;
+      background-size: 500px; opacity: 0.10; pointer-events: none;
+      z-index: 1;
+    }
+    .header-content { position: relative; z-index: 2; }
+    .header-logo { width: 220px; margin-bottom: 10px; transition: all 0.3s ease-in-out; }
+    .header p { color: #fff; font-size: 18px; letter-spacing: 1px; font-weight: 500; }
+    .header-logo:hover { transform: scale(1.1) rotate(-2deg); filter: brightness(1.1); }
+
+    /* NAVIGASI */
+    .nav { position: sticky; top: 0; z-index: 1000; background: #0c5b5b; height: 60px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .nav-container { max-width: 1200px; margin: auto; display: flex; align-items: center; justify-content: space-between; height: 100%; padding: 0 20px; }
+    .nav-left { display: flex; align-items: center; }
+    .hamburger { display: none; font-size: 24px; color: #fff; cursor: pointer; }
+    .nav-mini-logo { width: 35px; height: 35px; object-fit: contain; margin-left: 10px; transition: 0.3s; }
+    .nav-mini-logo:hover { transform: rotate(360deg); }
+    .page-title { color: #fff; font-weight: bold; margin-left: 10px; text-transform: uppercase; font-size: 14px; }
+    
+    .nav ul { list-style: none; display: flex; align-items: center; }
+    .nav li { padding: 0 20px; height: 60px; line-height: 60px; color: white; cursor: pointer; transition: 0.3s; font-size: 14px; }
+    .nav li a { text-decoration: none; color: inherit; display: block; }
+    .nav li:hover { background: #c62828; }
+    .wa-nav { background: #25D366; font-weight: bold; }
+    .wa-nav a { color: #000 !important; }
+
+    /* SHOP CONTENT */
+    .shop-header { text-align: center; padding: 60px 20px 20px; }
+    .shop-header h1 { font-size: 40px; text-transform: uppercase; letter-spacing: 2px; }
+    .shop-header p { color: #ffc400; font-weight: bold; margin-top: 10px; }
+
+    /* FILTER */
+    .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin: 40px 0; }
+    .filter-btn { 
+      background: none; border: none; color: #fff; font-weight: bold; 
+      cursor: pointer; text-transform: uppercase; font-size: 14px; padding: 5px 10px;
+      transition: 0.3s; opacity: 0.6;
+    }
+    .filter-btn.active, .filter-btn:hover { opacity: 1; color: #ffc400; border-bottom: 2px solid #ffc400; }
+
+    /* GRID PRODUK */
+    .product-grid { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 25px; padding: 20px; }
+    .product-card { text-align: center; cursor: pointer; transition: 0.4s; animation: fadeIn 0.8s ease; }
+    .product-card:hover { transform: scale(1.05); }
+    .img-box { background: #e0f2f1; border-radius: 15px; overflow: hidden; margin-bottom: 12px; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; }
+    .img-box img { width: 90%; height: auto; object-fit: contain; }
+    .product-card span { font-size: 10px; text-transform: uppercase; color: #ffc400; display: block; margin-bottom: 5px; }
+    .product-card h3 { font-size: 13px; line-height: 1.4; color: #fff; }
+
+    /* MODAL */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+    .modal.show { display: flex; }
+    .modal-content { background: #fff; color: #333; width: 100%; max-width: 400px; padding: 30px; border-radius: 20px; position: relative; text-align: center; animation: zoomIn 0.3s ease; }
+    .close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #333; }
+    .modal-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .modal-price { font-size: 24px; color: #0c5b5b; font-weight: bold; margin: 10px 0; }
+    .modal-desc { font-size: 14px; color: #666; margin-bottom: 20px; line-height: 1.5; }
+    .btn-order-modal { display: block; width: 100%; padding: 12px; background: #25D366; color: #fff; text-decoration: none; border-radius: 10px; font-weight: bold; transition: 0.3s; }
+    .btn-order-modal:hover { background: #1eb954; }
+
+    /* FOOTER AREA */
+    .footer-section { padding: 60px 20px; background: #f9f9f9; }
+    .main-wrapper { max-width: 1100px; margin: 0 auto; }
+    .banner-container { 
+      background-color: #FAF3E0; 
+      display: flex; 
+      position: relative; 
+      padding: 40px; 
+      border-radius: 10px; 
+      overflow: hidden; 
+      gap: 30px; 
+      align-items: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+    
+    /* Koreksi Warna Alamat Menjadi Hitam */
+    .address-details { color: #000000; text-align: left; }
+    .address-details .label, 
+    .address-details .desc, 
+    .address-details .phone,
+    .address-details .other-loc {
+      color: #000000 !important;
+      margin-bottom: 5px;
+    }
+    .address-details .label { font-weight: bold; font-size: 16px; text-transform: uppercase; }
+    .address-details .other-loc { margin-top: 10px; font-weight: bold; display: block; }
+
+    .bg-map-overlay { 
+      position: absolute; 
+      inset: 0; 
+      background: url('https://upload.wikimedia.org/wikipedia/commons/a/a8/Map_of_Indonesia.svg') center/contain no-repeat; 
+      opacity: 0.04; 
+      z-index: 0;
+    }
+    .logo-footer { width: 130px; z-index: 1; }
+    .info-area { flex: 2; z-index: 1; }
+    .main-title { font-size: 20px; margin-bottom: 12px; color: #333; font-weight: bold; text-align: left; }
+    .city-list { font-size: 12px; margin-bottom: 20px; color: #666; line-height: 1.6; text-align: left; }
+    .bottom-info { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; }
+    .label { font-weight: bold; font-size: 14px; margin-bottom: 5px; display: block; }
+    .desc, .phone { font-size: 13px; margin: 4px 0; color: #444; }
+    .other-loc { font-weight: bold; margin-top: 15px; font-size: 13px; }
+
+    .social-details { text-align: center; }
+    .social-label { font-weight: bold; font-size: 14px; margin-bottom: 10px; color: #333; }
+    .social-icons { display: flex; gap: 10px; }
+    .icon-circle { 
+      width: 40px; height: 40px; border-radius: 50%; 
+      display: flex; align-items: center; justify-content: center; 
+      color: #fff; text-decoration: none; font-size: 18px; transition: 0.3s;
+    }
+    .icon-circle:hover { opacity: 0.8; transform: scale(1.1); }
+    .fb { background: #3b5998; } .ig { background: #E1306C; } .tt { background: #000; }
+
+    .map-area { flex: 1.2; z-index: 1; }
+    .map-wrapper { 
+      width: 100%; height: 180px; border: 4px solid #fff; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow: hidden; border-radius: 4px;
+    }
+    .map-wrapper a { display: block; width: 100%; height: 100%; }
+    .map-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+    .map-wrapper:hover .map-img { transform: scale(1.1); }
+
+    /* ANIMASI */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* RESPONSIVE (MOBILE & TABLET) */
+    @media (max-width: 1024px) { 
+      .product-grid { grid-template-columns: repeat(3, 1fr); } 
+      .banner-container { flex-direction: column; text-align: center; }
+      .main-title, .city-list, .address-details { text-align: center; }
+      .bottom-info { flex-direction: column; align-items: center; }
+    }
+    
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav ul { 
+        position: absolute; top: 60px; left: 0; width: 100%; background: #0c5b5b; 
+        flex-direction: column; display: none; border-top: 1px solid rgba(255,255,255,0.1); 
+      }
+      .nav ul.show { display: flex; }
+      .nav li { width: 100%; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+      .shop-header h1 { font-size: 28px; }
+      .banner-container { padding: 30px 15px; }
+      .map-wrapper { height: 180px; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-content">
+      <img src="img/Hunter Chiken Logo.png" alt="Hunter Chicken" class="header-logo" onerror="this.src='https://via.placeholder.com/220x80?text=HUNTER+CHICKEN'"/>
+      <p>Supplier Ayam Segar & Terpercaya</p>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <div class="nav-container">
+      <div class="nav-left">
+        <div class="hamburger" id="hamburger">☰</div>
+        <img src="img/Hunter Chiken Logo.png" alt="Logo" class="nav-mini-logo" onerror="this.src='https://via.placeholder.com/30/ffffff/000000?text=H'">
+        <span class="page-title">Hunter Chicken Product</span>
+      </div>
+      <ul id="navMenu">
+        <li><a href="about.html">Home</a></li>
+        <li><a href="product.html">Produk</a></li>
+        <li onclick="location.href='about.html#service'"><a href="about.html"></a>Layanan</li>
+        <li onclick="location.href='product.html#footer'">Lokasi</li>
+        <li class="wa-nav"><a href="https://wa.me/6285778266727" target="_blank">Order WhatsApp</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="shop-header">
+    <h1>Shop Products</h1>
+    <p>100% HALAL / FRESH / HIGIENIS</p>
+  </div>
+
+  <div class="filter-container">
+    <button class="filter-btn active" onclick="filterProduct('all', event)">All Product</button>
+    <button class="filter-btn" onclick="filterProduct('karkas', event)">Karkas</button>
+    <button class="filter-btn" onclick="filterProduct('parting', event)">Ayam Parting</button>
+    <button class="filter-btn" onclick="filterProduct('boneless', event)">Boneless</button>
+    <button class="filter-btn" onclick="filterProduct('jeroan', event)">Jeroan</button>
+    <button class="filter-btn" onclick="filterProduct('ekses', event)">Ekses</button>
+  </div>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">×</span>
+      <img src="" id="m-img" class="modal-img">
+      <h2 id="m-title"></h2>
+      <p class="modal-price" id="m-price"></p>
+      <p class="modal-desc" id="m-desc"></p>
+      <a href="#" id="m-link" target="_blank" class="btn-order-modal">Pesan via WhatsApp</a>
+    </div>
+  </div>
+
+  <footer class="footer-section" id="footer">
+    <div class="main-wrapper">
+      <div class="banner-container">
+        <div class="bg-map-overlay"></div>
+        <div class="section">
+          <img src="img/indonesia.png" alt="Logo Indonesia" class="logo-footer" onerror="this.src='https://via.placeholder.com/130x130?text=LOGO'">
+        </div>
+
+        <div class="section info-area">
+          <h2 class="main-title">Chicken Hunter Siap Kirim Ke Wilayah Lainnya</h2>
+          <p class="city-list">Jakarta, Bogor, Depok, Tangerang, Bekasi, Cilegon, Serang, Tasikmalaya, Ciamis, Garut, Bandung, Cianjur, Cirebon, Karawang, Sukabumi, Tegal</p>
+
+          <div class="bottom-info">
+            <div class="address-details">
+              <span class="label">Alamat</span>
+              <p class="desc">Factory : Jl. Pendowo 1, Limo, Kota Depok, Jawa Barat</p>
+              <p class="phone"><strong>Contact 1 :</strong> +62 857-7826-6727</p>
+              <p class="phone"><strong>Contact 2 :</strong> +62 857-7826-6727</p>
+              <span class="other-loc">-> Other Location <-</span>
+            </div>
+
+            <div class="social-details">
+              <p class="social-label">Social Media</p>
+              <div class="social-icons">
+                <a href="https://facebook.com" class="icon-circle fb" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com" class="icon-circle ig" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://tiktok.com" class="icon-circle tt" target="_blank"><i class="fab fa-tiktok"></i></a>
+              </div> 
+            </div>
+          </div>
+        </div>
+
+        <div class="section map-area">
+          <div class="map-wrapper">
+            <a href="https://goo.gl/maps/XYZ" target="_blank">
+              <img src="img/maps.png" alt="Lokasi Google Maps" class="map-img" onerror="this.src='https://via.placeholder.com/300x200?text=Lihat+Peta'">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const products = [
+      { id: 1, cat: 'parting', title: 'ATPS Potong 6', price: 'Rp 38.000', img: 'img/parting6.png', desc: 'Ayam potong segar isi 6 bagian. Sangat pas untuk menu restoran atau konsumsi keluarga.' },
+      { id: 2, cat: 'parting', title: 'ATPS Potong 5', price: 'Rp 38.500', img: 'img/parting5.png', desc: 'Potongan ayam ukuran besar menjadi 5 bagian merata.' },
+      { id: 3, cat: 'parting', title: 'Ayam Potong 12', price: 'Rp 39.000', img: 'img/parting12.png', desc: 'Potongan kecil-kecil isi 12, cocok untuk menu katering atau prasmanan.' },
+      { id: 4, cat: 'jeroan', title: 'Usus Ayam Segar', price: 'Rp 15.000', img: 'img/usus.png', desc: 'Usus ayam bersih dan higienis, siap diolah menjadi keripik atau tumisan.' },
+      { id: 5, cat: 'parting', title: 'Ayam Potong 4', price: 'Rp 37.000', img: 'img/parting4.png', desc: 'Potongan ayam jumbo menjadi 4 bagian (2 paha, 2 dada).' },
+      { id: 6, cat: 'boneless', title: 'Fillet Dada', price: 'Rp 55.000', img: 'img/fillet.png', desc: 'Daging dada tanpa tulang dan kulit. Sangat segar untuk steak atau katsu.' }
+    ];
+
+    const grid = document.getElementById('productGrid');
+    const modal = document.getElementById('productModal');
+    const navMenu = document.getElementById('navMenu');
+    const hamburger = document.getElementById('hamburger');
+
+    function displayProducts(items) {
+      grid.innerHTML = items.map(p => `
+        <div class="product-card" onclick="openModal(${p.id})">
+          <div class="img-box">
+            <img src="${p.img}" alt="${p.title}" onerror="this.src='https://via.placeholder.com/150?text=Produk'">
+          </div>
+          <span>AYAM ${p.cat}</span>
+          <h3>${p.title}</h3>
+        </div>
+      `).join('');
+    }
+
+    function filterProduct(category, event) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      const filtered = category === 'all' ? products : products.filter(p => p.cat === category);
+      displayProducts(filtered);
+    }
+
+    function openModal(id) {
+      const p = products.find(item => item.id === id);
+      if(!p) return;
+      document.getElementById('m-img').src = p.img;
+      document.getElementById('m-title').innerText = p.title;
+      document.getElementById('m-price').innerText = p.price;
+      document.getElementById('m-desc').innerText = p.desc;
+      document.getElementById('m-link').href = `https://wa.me/6285778266727?text=Halo%20Admin,%20saya%20ingin%20pesan%20${encodeURIComponent(p.title)}`;
+      modal.classList.add('show');
+    }
+
+    function closeModal() { modal.classList.remove('show'); }
+    hamburger.onclick = () => navMenu.classList.toggle('show');
+    window.onclick = (e) => { if(e.target == modal) closeModal(); }
+    displayProducts(products);
+  </script>
+</body>
+</html>
