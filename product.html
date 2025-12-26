@@ -1,179 +1,246 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shop Products - Hunter Chicken</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
+
   <style>
     /* --- CSS DASAR --- */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; scroll-behavior: smooth; }
-    body { background-color: #0c5b5b; color: #fff; padding-bottom: 0; overflow-x: hidden; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; scroll-behavior: smooth; }
+    body { background-color: #0c5b5b; color: #fff; overflow-x: hidden; }
 
-    /* HEADER UTAMA */
-    .header {
-      width: 100%; padding: 50px 20px;
-      background: linear-gradient(120deg, #4bffff, #0c5b5b);
-      display: flex; justify-content: center; text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .header::before {
-      content: ""; position: absolute; inset: 0;
-      background: url("img/name.png") no-repeat center;
-      background-size: 500px; opacity: 0.10; pointer-events: none;
-      z-index: 1;
-    }
+    /* HEADER & NAV (Sesuai Struktur Awal) */
+    .header { width: 100%; padding: 50px 20px; background: linear-gradient(120deg, #4bffff, #0c5b5b); display: flex; justify-content: center; text-align: center; position: relative; overflow: hidden; }
+    .header::before { content: ""; position: absolute; inset: 0; background: url("img/name.png") no-repeat center; background-size: 500px; opacity: 0.10; pointer-events: none; z-index: 1; }
     .header-content { position: relative; z-index: 2; }
     .header-logo { width: 220px; margin-bottom: 10px; transition: all 0.3s ease-in-out; }
-    .header p { color: #fff; font-size: 18px; letter-spacing: 1px; font-weight: 500; }
     .header-logo:hover { transform: scale(1.1) rotate(-2deg); filter: brightness(1.1); }
-
-    /* NAVIGASI */
-    .nav { position: sticky; top: 0; z-index: 1000; background: #0c5b5b; height: 60px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .nav-container { max-width: 1200px; margin: auto; display: flex; align-items: center; justify-content: space-between; height: 100%; padding: 0 20px; }
-    .nav-left { display: flex; align-items: center; }
+    .header p { color: #fff; font-size: 18px; letter-spacing: 1px; font-weight: 500; }
+    .nav { position: sticky; top: 0; z-index: 1000; background: #0c5b5b; height: 60px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+    .nav-container { max-width: 1200px; margin: auto; display: flex; align-items: center; justify-content: space-between; height: 100%; }
     .hamburger { display: none; font-size: 24px; color: #fff; cursor: pointer; }
-    .nav-mini-logo { width: 35px; height: 35px; object-fit: contain; margin-left: 10px; transition: 0.3s; }
-    .nav-mini-logo:hover { transform: rotate(360deg); }
-    .page-title { color: #fff; font-weight: bold; margin-left: 10px; text-transform: uppercase; font-size: 14px; }
-    
+    .nav-left { display: flex; align-items: center; padding-left: 20px; }
+    .nav-mini-logo { width: 35px; height: 35px; object-fit: contain; border-radius: 50%; transition: 0.3s; flex-shrink: 0; }
+    .nav-mini-logo:hover { transform: rotate(360deg);}
+    .page-title { color: #fff; font-weight: bold; margin-left: 12px; text-transform: uppercase; font-size: 14px; white-space: nowrap; }
     .nav ul { list-style: none; display: flex; align-items: center; }
-    .nav li { padding: 0 20px; height: 60px; line-height: 60px; color: white; cursor: pointer; transition: 0.3s; font-size: 14px; }
-    .nav li a { text-decoration: none; color: inherit; display: block; }
-    .nav li:hover { background: #c62828; }
-    .wa-nav { background: #25D366; font-weight: bold; }
-    .wa-nav a { color: #000 !important; }
+    .nav li { padding: 0 25px; height: 60px; line-height: 60px; color: white; cursor: pointer; transition: 0.3s; font-size: 14px; font-weight: 500; }
+    .nav li:hover { background: #c62828;}
+    .nav li a { text-decoration: none; color: inherit; }
+    .wa-nav { background: #25D366; }
+    .wa-nav a {  text-decoration: none; color: #000 !important; font-weight: bold; }
 
-    /* SHOP CONTENT */
-    .shop-header { text-align: center; padding: 60px 20px 20px; }
-    .shop-header h1 { font-size: 40px; text-transform: uppercase; letter-spacing: 2px; }
-    .shop-header p { color: #ffc400; font-weight: bold; margin-top: 10px; }
+    /* SHOP HEADER & KERANJANG */
+    .shop-header { text-align: center; padding: 40px 20px 20px; }
+    .cart-nav { margin-top: 15px; }
+    .cart-icon-container { position: relative; display: inline-block; background: #fff; color: #0c5b5b; padding: 10px 25px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .cart-badge { position: absolute; top: -5px; right: -5px; background: #ffc400; color: #000; font-size: 12px; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; }
 
     /* FILTER */
-    .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin: 40px 0; }
-    .filter-btn { 
-      background: none; border: none; color: #fff; font-weight: bold; 
-      cursor: pointer; text-transform: uppercase; font-size: 14px; padding: 5px 10px;
-      transition: 0.3s; opacity: 0.6;
+    .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+    .filter-btn { background: rgba(255,255,255,0.1); border: 1px solid #fff; color: #fff; padding: 8px 18px; border-radius: 20px; cursor: pointer; text-transform: uppercase; font-size: 12px; transition: 0.3s; }
+    .filter-btn.active { background: #ffc400; color: #000; border-color: #ffc400; font-weight: bold; }
+
+    /* PRODUCT CARD */
+    .product-grid { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; padding: 20px; }
+    .product-card { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; text-align: center; transition: 0.3s; position: relative; border: 1px solid rgba(255,255,255,0.1); }
+    .product-card:hover { transform: scale(1.03); background: rgba(255,255,255,0.1); }
+    .item-count-tag { position: absolute; top: 10px; left: 10px; background: #ffc400; color: #000; padding: 2px 10px; border-radius: 20px; font-weight: 800; font-size: 12px; display: none; z-index: 5; }
+    .img-box { background: #fff; border-radius: 12px; overflow: hidden; margin-bottom: 10px; height: 150px; display: flex; align-items: center; justify-content: center; }
+    .img-box img { max-width: 90%; max-height: 90%; object-fit: contain; }
+    .product-card h3 { font-size: 15px; margin: 10px 0; }
+    
+    /* TOMBOL AKSI (+/-) */
+    .action-btns { display: flex; gap: 5px; margin-top: 10px; }
+    .btn-plus { flex: 2; background: #25D366; color: #fff; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    .btn-minus { flex: 1; background: #ff4444; color: #fff; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; display: none; }
+    .btn-order-modal {
+    margin-top: 20px;
+    border: 2px solid #ccc; /* Border tipis agar terlihat */
+    background-color: #ffffff; /* Warna putih */
+    color: #333; /* Warna teks gelap */
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease; /* Membuat transisi warna halus */
+    width: 100%;
     }
-    .filter-btn.active, .filter-btn:hover { opacity: 1; color: #ffc400; border-bottom: 2px solid #ffc400; }
-
-    /* GRID PRODUK */
-    .product-grid { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 25px; padding: 20px; }
-    .product-card { text-align: center; cursor: pointer; transition: 0.4s; animation: fadeIn 0.8s ease; }
-    .product-card:hover { transform: scale(1.05); }
-    .img-box { background: #e0f2f1; border-radius: 15px; overflow: hidden; margin-bottom: 12px; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; }
-    .img-box img { width: 90%; height: auto; object-fit: contain; }
-    .product-card span { font-size: 10px; text-transform: uppercase; color: #ffc400; display: block; margin-bottom: 5px; }
-    .product-card h3 { font-size: 13px; line-height: 1.4; color: #fff; }
-
+    /* Keadaan tombol saat disentuh kursor (Hover) */
+    .btn-order-modal:hover {
+    background-color: #25D366; /* Warna Hijau WhatsApp */
+    color: #ffffff; /* Teks berubah jadi putih */
+    border-color: #25D366;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); /* Efek cahaya hijau */
+    }
+    /* Mengatur jarak ikon WA */
+    .btn-order-modal i {
+    margin-right: 10px;
+    font-size: 20px;
+    }
     /* MODAL */
-    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+    .modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
     .modal.show { display: flex; }
-    .modal-content { background: #fff; color: #333; width: 100%; max-width: 400px; padding: 30px; border-radius: 20px; position: relative; text-align: center; animation: zoomIn 0.3s ease; }
-    .close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #333; }
-    .modal-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
-    .modal-price { font-size: 24px; color: #0c5b5b; font-weight: bold; margin: 10px 0; }
-    .modal-desc { font-size: 14px; color: #666; margin-bottom: 20px; line-height: 1.5; }
-    .btn-order-modal { display: block; width: 100%; padding: 12px; background: #25D366; color: #fff; text-decoration: none; border-radius: 10px; font-weight: bold; transition: 0.3s; }
-    .btn-order-modal:hover { background: #1eb954; }
+    .modal-content { background: #fff; color: #333; width: 100%; max-width: 400px; padding: 25px; border-radius: 20px; position: relative; }
+    .close-modal { position: absolute; top: 10px; right: 15px; font-size: 25px; cursor: pointer; }
+    .receipt-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #ddd; font-size: 14px; }
+    .total-row { font-weight: bold; font-size: 18px; color: #0c5b5b; display: flex; justify-content: space-between; margin-top: 15px; border-top: 2px solid #0c5b5b; padding-top: 10px; }
 
-    /* FOOTER AREA */
-    .footer-section { padding: 60px 20px; background: #f9f9f9; }
-    .main-wrapper { max-width: 1100px; margin: 0 auto; }
-    .banner-container { 
-      background-color: #FAF3E0; 
-      display: flex; 
-      position: relative; 
-      padding: 40px; 
-      border-radius: 10px; 
-      overflow: hidden; 
-      gap: 30px; 
-      align-items: center;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        /* --- FOOTER & MAP --- */
+    .footer-section {
+      padding: 60px 20px;
+      background: #f9f9f9;
     }
-    
-    /* Koreksi Warna Alamat Menjadi Hitam */
-    .address-details { color: #000000; text-align: left; }
-    .address-details .label, 
-    .address-details .desc, 
-    .address-details .phone,
-    .address-details .other-loc {
+
+    .footer-section p {
       color: #000000 !important;
-      margin-bottom: 5px;
     }
-    .address-details .label { font-weight: bold; font-size: 16px; text-transform: uppercase; }
-    .address-details .other-loc { margin-top: 10px; font-weight: bold; display: block; }
 
-    .bg-map-overlay { 
-      position: absolute; 
-      inset: 0; 
-      background: url('https://upload.wikimedia.org/wikipedia/commons/a/a8/Map_of_Indonesia.svg') center/contain no-repeat; 
-      opacity: 0.04; 
+    .address-details p,
+    .city-list {
+      color: #000000 !important;
+    }
+
+    .main-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .banner-container {
+      background-color: #FAF3E0;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      position: relative;
+      padding: 40px;
+      border-radius: 10px;
+      overflow: hidden;
+      gap: 30px;
+      align-items: flex-start;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .bg-map-overlay {
+      position: absolute;
+      inset: 0;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/a/a8/Map_of_Indonesia.svg') center/contain no-repeat;
+      opacity: 0.04;
       z-index: 0;
+      pointer-events: none !important;
     }
-    .logo-footer { width: 130px; z-index: 1; }
-    .info-area { flex: 2; z-index: 1; }
-    .main-title { font-size: 20px; margin-bottom: 12px; color: #333; font-weight: bold; text-align: left; }
-    .city-list { font-size: 12px; margin-bottom: 20px; color: #666; line-height: 1.6; text-align: left; }
-    .bottom-info { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; }
-    .label { font-weight: bold; font-size: 14px; margin-bottom: 5px; display: block; }
-    .desc, .phone { font-size: 13px; margin: 4px 0; color: #444; }
-    .other-loc { font-weight: bold; margin-top: 15px; font-size: 13px; }
 
-    .social-details { text-align: center; }
-    .social-label { font-weight: bold; font-size: 14px; margin-bottom: 10px; color: #333; }
-    .social-icons { display: flex; gap: 10px; }
-    .icon-circle { 
-      width: 40px; height: 40px; border-radius: 50%; 
-      display: flex; align-items: center; justify-content: center; 
-      color: #fff; text-decoration: none; font-size: 18px; transition: 0.3s;
+    .logo-footer {
+      width: 130px;
+      z-index: 1;
     }
-    .icon-circle:hover { opacity: 0.8; transform: scale(1.1); }
-    .fb { background: #3b5998; } .ig { background: #E1306C; } .tt { background: #000; }
 
-    .map-area { flex: 1.2; z-index: 1; }
-    .map-wrapper { 
-      width: 100%; height: 180px; border: 4px solid #fff; 
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow: hidden; border-radius: 4px;
+    .info-area {
+      flex: 2;
+      min-width: 300px;
+      z-index: 1;
     }
-    .map-wrapper a { display: block; width: 100%; height: 100%; }
-    .map-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-    .map-wrapper:hover .map-img { transform: scale(1.1); }
 
-    /* ANIMASI */
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-    /* RESPONSIVE (MOBILE & TABLET) */
-    @media (max-width: 1024px) { 
-      .product-grid { grid-template-columns: repeat(3, 1fr); } 
-      .banner-container { flex-direction: column; text-align: center; }
-      .main-title, .city-list, .address-details { text-align: center; }
-      .bottom-info { flex-direction: column; align-items: center; }
+    .main-title {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #333;
+      font-weight: bold;
     }
-    
+
+    .bottom-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .icon-circle {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .fb { background: #3b5998; }
+    .ig { background: #E1306C; }
+    .tt { background: #000; }
+
+    .map-area {
+      flex: 1.5;
+      min-width: 300px;
+      width: 100%;
+      z-index: 5;
+    }
+
+    .map-wrapper {
+      width: 100%;
+      height: 280px;
+      border: 4px solid #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      border-radius: 8px;
+      position: relative;
+      background: #ddd;
+      pointer-events: auto !important;
+      touch-action: auto;
+    }
+
+    .map-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      pointer-events: auto !important;
+    }
     @media (max-width: 768px) {
       .hamburger { display: block; }
-      .nav ul { 
-        position: absolute; top: 60px; left: 0; width: 100%; background: #0c5b5b; 
-        flex-direction: column; display: none; border-top: 1px solid rgba(255,255,255,0.1); 
-      }
+      .nav ul { position: absolute; top: 60px; left: 0; width: 100%; background: #0c5b5b; flex-direction: column; display: none; border-top: 1px solid rgba(255, 255, 255, 0.1); }
       .nav ul.show { display: flex; }
-      .nav li { width: 100%; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .nav li {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
       .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-      .shop-header h1 { font-size: 28px; }
-      .banner-container { padding: 30px 15px; }
-      .map-wrapper { height: 180px; width: 100%; }
+    
     }
+    /* Footer Credit paling bawah */
+.footer-credit {
+    width: 100%;
+    padding: 15px 0;
+    background-color: #f1f1f1; /* Warna abu-abu sangat muda agar tidak mencolok */
+    text-align: center;
+}
+
+.footer-credit p {
+    font-size: 11px; /* Ukuran teks kecil */
+    color: #888 !important; /* Warna teks pudar agar halus */
+    letter-spacing: 1px;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
   </style>
 </head>
+
 <body>
 
   <header class="header">
     <div class="header-content">
-      <img src="img/Hunter Chiken Logo.png" alt="Hunter Chicken" class="header-logo" onerror="this.src='https://via.placeholder.com/220x80?text=HUNTER+CHICKEN'"/>
+      <img src="img/Hunter Chiken Logo.png" alt="Hunter Chicken" class="header-logo" onerror="this.src='https://via.placeholder.com/220x80?text=HUNTER+CHICKEN'" />
       <p>Supplier Ayam Segar & Terpercaya</p>
     </div>
   </header>
@@ -182,15 +249,15 @@
     <div class="nav-container">
       <div class="nav-left">
         <div class="hamburger" id="hamburger">☰</div>
-        <img src="img/Hunter Chiken Logo.png" alt="Logo" class="nav-mini-logo" onerror="this.src='https://via.placeholder.com/30/ffffff/000000?text=H'">
-        <span class="page-title">Hunter Chicken Product</span>
+        <img src="img/Hunter Chiken Logo.png" alt="Mini Logo" class="nav-mini-logo" onerror="this.src='https://via.placeholder.com/30/ffffff/000000?text=H'">
+        <span class="page-title" id="pageTitle">Hunter Chicken</span>
       </div>
       <ul id="navMenu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="product.html">Produk</a></li>
-        <li onclick="location.href='index.html#service'"><a href="index.html"></a>Layanan</li>
-        <li onclick="location.href='product.html#footer'">Lokasi</li>
-        <li class="wa-nav"><a href="https://wa.me/6285778266727" target="_blank">Order WhatsApp</a></li>
+        <li><a href="index.html">Home</li>
+        <li onclick="location.href='#produk'">Produk</a></li>
+        <li onclick="location.href='index.html#service'">Layanan</li>
+        <li onclick="location.href='#footer'">Lokasi</li>
+        <li class="wa-nav"><a href="https://wa.me/62895611707453?text=Halo%20saya%20ingin%20bertanya%20seputar%20produk%20Hunter%20Chicken." target="_blank">Call Center</a></li>
       </ul>
     </div>
   </nav>
@@ -198,121 +265,186 @@
   <div class="shop-header">
     <h1>Shop Products</h1>
     <p>100% HALAL / FRESH / HIGIENIS</p>
+    <div class="cart-nav">
+      <div class="cart-icon-container" onclick="openCart()">
+        <i class="fas fa-shopping-cart"></i> KERANJANG
+        <span class="cart-badge" id="cartCount">0</span>
+      </div>
+    </div>
   </div>
 
   <div class="filter-container">
-    <button class="filter-btn active" onclick="filterProduct('all', event)">All Product</button>
-    <button class="filter-btn" onclick="filterProduct('karkas', event)">Karkas</button>
-    <button class="filter-btn" onclick="filterProduct('parting', event)">Ayam Parting</button>
-    <button class="filter-btn" onclick="filterProduct('boneless', event)">Boneless</button>
-    <button class="filter-btn" onclick="filterProduct('jeroan', event)">Jeroan</button>
-    <button class="filter-btn" onclick="filterProduct('ekses', event)">Ekses</button>
+    <button class="filter-btn active" onclick="filterProduct('all', this)">All</button>
+    <button class="filter-btn" onclick="filterProduct('karkas', this)">Karkas</button>
+    <button class="filter-btn" onclick="filterProduct('parting', this)">Parting</button>
+    <button class="filter-btn" onclick="filterProduct('boneless', this)">Boneless</button>
+    <button class="filter-btn" onclick="filterProduct('jeroan', this)">Jeroan</button>
   </div>
 
   <div class="product-grid" id="productGrid"></div>
 
-  <div class="modal" id="productModal">
+  <div class="modal" id="cartModal">
     <div class="modal-content">
-      <span class="close-modal" onclick="closeModal()">×</span>
-      <img src="" id="m-img" class="modal-img">
-      <h2 id="m-title"></h2>
-      <p class="modal-price" id="m-price"></p>
-      <p class="modal-desc" id="m-desc"></p>
-      <a href="#" id="m-link" target="_blank" class="btn-order-modal">Pesan via WhatsApp</a>
+      <span class="close-modal" onclick="closeCart()">×</span>
+      <h2 style="text-align:center; margin-bottom:15px;">Struk Belanja</h2>
+      <div id="receipt-content"></div>
+      <div class="total-row" id="totalPriceRow"></div>
+      <button onclick="sendToWA()" class="btn-order-modal" style="margin-top:20px; border:none; cursor:pointer;">
+        <i class="fab fa-whatsapp"></i> Pesan Sekarang via WA ->
+      </button>
     </div>
   </div>
 
-  <footer class="footer-section" id="footer">
+    <footer class="footer-section" id="footer">
     <div class="main-wrapper">
       <div class="banner-container">
         <div class="bg-map-overlay"></div>
         <div class="section">
-          <img src="img/indonesia.png" alt="Logo Indonesia" class="logo-footer" onerror="this.src='https://via.placeholder.com/130x130?text=LOGO'">
+          <img src="img/indonesia.png" alt="Logo" class="logo-footer" onerror="this.src='https://via.placeholder.com/130x130?text=LOGO'">
         </div>
-
         <div class="section info-area">
           <h2 class="main-title">Chicken Hunter Siap Kirim Ke Wilayah Lainnya</h2>
-          <p class="city-list">Jakarta, Bogor, Depok, Tangerang, Bekasi, Cilegon, Serang, Tasikmalaya, Ciamis, Garut, Bandung, Cianjur, Cirebon, Karawang, Sukabumi, Tegal</p>
-
+          <p class="city-list">Jakarta, Bogor, Depok, Tangerang, Bekasi, Cilegon, Serang, Bandung, dll.</p>
           <div class="bottom-info">
             <div class="address-details">
-              <span class="label">Alamat</span>
-              <p class="desc">Factory : Jl. Pendowo 1, Limo, Kota Depok, Jawa Barat</p>
-              <p class="phone"><strong>Contact 1 :</strong> +62 857-7826-6727</p>
-              <p class="phone"><strong>Contact 2 :</strong> +62 857-7826-6727</p>
-              <span class="other-loc">-> Other Location <-</span>
+              <span class="label" style="color:#000; font-weight:bold;">📍 Alamat</span>
+              <p class="desc">Factory: Jl. Pendowo 1, Limo, Kota Depok, Jawa Barat</p>
+              <p class="phone"><strong>WA 1:</strong> +62 857-7826-6727</p>
+              <p class="phone"><strong>WA 2:</strong> +62 857-7826-6727</p>
             </div>
-
             <div class="social-details">
-              <p class="social-label">Social Media</p>
+              <p class="social-label" style="color:#000; font-weight:bold;">Social Media</p>
               <div class="social-icons">
-                <a href="https://facebook.com" class="icon-circle fb" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://instagram.com" class="icon-circle ig" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://tiktok.com" class="icon-circle tt" target="_blank"><i class="fab fa-tiktok"></i></a>
-              </div> 
+                <a href="#" class="icon-circle fb"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="icon-circle ig"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="icon-circle tt"><i class="fab fa-tiktok"></i></a>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="section map-area">
           <div class="map-wrapper">
-            <a href="https://goo.gl/maps/XYZ" target="_blank">
-              <img src="img/maps.png" alt="Lokasi Google Maps" class="map-img" onerror="this.src='https://via.placeholder.com/300x200?text=Lihat+Peta'">
-            </a>
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.1793574181347!2d106.772596675039!3d-6.370845393619253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69efec39d5b761%3A0x67394595e69e3465!2sJl.%20Pendowo%20No.1%2C%20Limo%2C%20Kec.%20Limo%2C%20Kota%20Depok%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1703600000000!5m2!1sid!2sid" 
+              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
           </div>
         </div>
       </div>
     </div>
   </footer>
 
+<div class="footer-credit">
+    <p>© 2025 Created by @fandyramadhan25_ / fun25r</p>
+</div>
   <script>
     const products = [
-      { id: 1, cat: 'parting', title: 'ATPS Potong 6', price: 'Rp 38.000', img: 'img/parting6.png', desc: 'Ayam potong segar isi 6 bagian. Sangat pas untuk menu restoran atau konsumsi keluarga.' },
-      { id: 2, cat: 'parting', title: 'ATPS Potong 5', price: 'Rp 38.500', img: 'img/parting5.png', desc: 'Potongan ayam ukuran besar menjadi 5 bagian merata.' },
-      { id: 3, cat: 'parting', title: 'Ayam Potong 12', price: 'Rp 39.000', img: 'img/parting12.png', desc: 'Potongan kecil-kecil isi 12, cocok untuk menu katering atau prasmanan.' },
-      { id: 4, cat: 'jeroan', title: 'Usus Ayam Segar', price: 'Rp 15.000', img: 'img/usus.png', desc: 'Usus ayam bersih dan higienis, siap diolah menjadi keripik atau tumisan.' },
-      { id: 5, cat: 'parting', title: 'Ayam Potong 4', price: 'Rp 37.000', img: 'img/parting4.png', desc: 'Potongan ayam jumbo menjadi 4 bagian (2 paha, 2 dada).' },
-      { id: 6, cat: 'boneless', title: 'Fillet Dada', price: 'Rp 55.000', img: 'img/fillet.png', desc: 'Daging dada tanpa tulang dan kulit. Sangat segar untuk steak atau katsu.' }
+      { id: 1, cat: 'karkas', title: 'Boiler', price: 38000, img: 'produk/boiler.png' },
+      { id: 2, cat: 'karkas', title: 'Ayam Kampung', price: 40000, img: 'produk/kampung.png' },
+      { id: 3, cat: 'parting', title: 'Ayam Potong 12', price: 39000, img: 'produk/parting12.png' },
+      { id: 4, cat: 'parting', title: 'Parting Dada /pcs', price: 10000, img: 'produk/partingdada.png' },
+      { id: 5, cat: 'parting', title: 'Parting Paha /pcs', price: 10000, img: 'produk/partingpaha.png' },
+      { id: 6, cat: 'arting', title: 'parting Sayap /pcs', price: 7000, img: 'produk/partingsayap.png' },
+      { id: 7, cat: 'jeroan', title: 'Ati Ayam 1kg', price: 20000, img: 'produk/atiayam.png' },
+      { id: 8, cat: 'jeroan', title: 'usus 500G', price: 10000, img: 'produk/atiayam.png' },
+      { id: 9, cat: 'boneless', title: 'Boneles /pcs', price: 15000, img: 'produk/boneles.png' }
     ];
 
-    const grid = document.getElementById('productGrid');
-    const modal = document.getElementById('productModal');
-    const navMenu = document.getElementById('navMenu');
-    const hamburger = document.getElementById('hamburger');
+    let cart = [];
 
     function displayProducts(items) {
-      grid.innerHTML = items.map(p => `
-        <div class="product-card" onclick="openModal(${p.id})">
-          <div class="img-box">
-            <img src="${p.img}" alt="${p.title}" onerror="this.src='https://via.placeholder.com/150?text=Produk'">
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = items.map(p => {
+        const itemInCart = cart.find(item => item.id === p.id);
+        const qty = itemInCart ? itemInCart.qty : 0;
+        return `
+          <div class="product-card">
+            <div class="item-count-tag" id="tag-${p.id}" style="display: ${qty > 0 ? 'block' : 'none'}">${qty}x</div>
+            <div class="img-box"><img src="${p.img}" onerror="this.src='https://via.placeholder.com/150'"></div>
+            <span style="color:#ffc400; font-size:11px;">${p.cat.toUpperCase()}</span>
+            <h3>${p.title}</h3>
+            <p style="color:#ffc400; font-weight:bold;">Rp ${p.price.toLocaleString()}</p>
+            <div class="action-btns">
+              <button class="btn-minus" id="btn-m-${p.id}" onclick="removeFromCart(${p.id})" style="display: ${qty > 0 ? 'block' : 'none'}">-</button>
+              <button class="btn-plus" onclick="addToCart(${p.id})">+ Keranjang</button>
+            </div>
           </div>
-          <span>AYAM ${p.cat}</span>
-          <h3>${p.title}</h3>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
-    function filterProduct(category, event) {
-      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+    function filterProduct(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
       const filtered = category === 'all' ? products : products.filter(p => p.cat === category);
       displayProducts(filtered);
     }
 
-    function openModal(id) {
-      const p = products.find(item => item.id === id);
-      if(!p) return;
-      document.getElementById('m-img').src = p.img;
-      document.getElementById('m-title').innerText = p.title;
-      document.getElementById('m-price').innerText = p.price;
-      document.getElementById('m-desc').innerText = p.desc;
-      document.getElementById('m-link').href = `https://wa.me/6285778266727?text=Halo%20Admin,%20saya%20ingin%20pesan%20${encodeURIComponent(p.title)}`;
-      modal.classList.add('show');
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      const inCart = cart.find(item => item.id === id);
+      if (inCart) { inCart.qty++; } else { cart.push({ ...product, qty: 1 }); }
+      updateUI(id);
     }
 
-    function closeModal() { modal.classList.remove('show'); }
-    hamburger.onclick = () => navMenu.classList.toggle('show');
-    window.onclick = (e) => { if(e.target == modal) closeModal(); }
+    function removeFromCart(id) {
+      const inCart = cart.find(item => item.id === id);
+      if (inCart) {
+        inCart.qty--;
+        if (inCart.qty === 0) { cart = cart.filter(item => item.id !== id); }
+      }
+      updateUI(id);
+    }
+
+    function updateUI(id) {
+      const item = cart.find(i => i.id === id);
+      const qty = item ? item.qty : 0;
+      
+      const tag = document.getElementById(`tag-${id}`);
+      const btnMinus = document.getElementById(`btn-m-${id}`);
+      
+      if(tag) {
+        tag.innerText = qty + "x";
+        tag.style.display = qty > 0 ? "block" : "none";
+      }
+      if(btnMinus) {
+        btnMinus.style.display = qty > 0 ? "block" : "none";
+      }
+      
+      const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
+      document.getElementById('cartCount').innerText = totalItems;
+    }
+
+    function openCart() {
+      if (cart.length === 0) return alert("Keranjang Kosong!");
+      let html = '';
+      let total = 0;
+      cart.forEach(item => {
+        const sub = item.price * item.qty;
+        total += sub;
+        html += `<div class="receipt-item"><span>${item.title} (x${item.qty})</span><span>Rp ${sub.toLocaleString()}</span></div>`;
+      });
+      document.getElementById('receipt-content').innerHTML = html;
+      document.getElementById('totalPriceRow').innerHTML = `<span>TOTAL</span><span>Rp ${total.toLocaleString()}</span>`;
+      document.getElementById('cartModal').classList.add('show');
+    }
+
+    function closeCart() { document.getElementById('cartModal').classList.remove('show'); }
+
+    function sendToWA() {
+      let msg = "*PESANAN BARU - HUNTER CHICKEN*\n----------------------------\n";
+      let total = 0;
+      cart.forEach((item, i) => {
+        const sub = item.price * item.qty;
+        total += sub;
+        msg += `${i + 1}. ${item.title} (x${item.qty}) = Rp ${sub.toLocaleString()}\n`;
+      });
+      msg += `----------------------------\n*TOTAL: Rp ${total.toLocaleString()}*`;
+      window.open(`https://wa.me/6285778266727?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    document.getElementById('hamburger').onclick = () => document.getElementById('navMenu').classList.toggle('show');
     displayProducts(products);
   </script>
 </body>

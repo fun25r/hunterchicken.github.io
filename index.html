@@ -1,250 +1,615 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hunter Chicken - Supplier Ayam Segar</title>
-  
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <style>
-    /* --- CSS INTERNAL --- */
-    
-    /* RESET & BASE */
-    * { 
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
-      scroll-behavior: smooth; 
-    }
-    
-    body { 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-      background: #fff; 
-      color: #333; 
-      overflow-x: hidden; 
+    /* --- RESET & BASE --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
     }
 
-    /* HEADER */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* --- HEADER --- */
     .header {
-      width: 100%; 
+      width: 100%;
       padding: 50px 20px;
       background: linear-gradient(120deg, #4bffff, #0c5b5b);
-      display: flex; 
-      justify-content: center; 
+      display: flex;
+      justify-content: center;
       text-align: center;
       position: relative;
     }
-    .header-content { position: relative; z-index: 2; }
-    .header-logo { width: 220px; margin-bottom: 10px; transition: 0.3s; }
-    .header-logo:hover { transform: scale(1.05); }
-    .header p { color: #fff; font-size: 18px; letter-spacing: 1px; font-weight: 500; }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .header-logo {
+      width: 220px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .header-logo:hover {
+      transform: scale(1.1) rotate(-2deg);
+      filter: brightness(1.1);
+    }
+
+    .header p {
+      color: #fff;
+      font-size: 18px;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
     .header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("img/name.png") no-repeat center;
-  background-size: 500px;
-  opacity: 0.10;
-  pointer-events: none;
-  z-index: 1;
-}
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("img/name.png") no-repeat center;
+      background-size: 500px;
+      opacity: 0.10;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-.header > * {
-  position: relative;
-  z-index: 2;
-}
-    /* NAVIGATION */
-    .nav { 
-      position: sticky; 
-      top: 0; 
-      z-index: 1000; 
-      background: #0c5b5b; 
-      height: 60px; 
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    /* --- NAVIGATION --- */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #0c5b5b;
+      height: 60px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-    .nav-container { 
-      max-width: 1200px; 
-      margin: auto; 
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between; 
-      height: 100%; 
-    }
-    .nav-left { display: flex; align-items: center; padding-left: 20px; }
-    .hamburger { display: none; font-size: 24px; color: #fff; cursor: pointer; }
-    .page-title { color: #fff; font-weight: bold; margin-left: 10px; text-transform: uppercase; font-size: 14px; }
-    
-    .nav ul { list-style: none; display: flex; align-items: center; }
-    .nav li { padding: 0 25px; height: 60px; line-height: 60px; color: white; cursor: pointer; transition: 0.3s; font-size: 14px; font-weight: 500; }
-    .nav li:hover { background: #c62828; }
-    
-    .wa-nav { background: #25D366; }
-    .wa-nav a { text-decoration: none; color: #000 !important; font-weight: bold; display: block; }
 
-    /* HOME SECTION */
-    .home { 
-      position: relative; 
-      min-height: 60vh; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      padding: 80px 20px; 
-      text-align: center; 
-    }
-    .logo-bg { position: absolute; z-index: -1; opacity: 0.08; pointer-events: none; }
-    .logo-bg img { width: 500px; filter: grayscale(100%); }
-    .home-content { max-width: 800px; }
-    .home-content h2 { font-size: 36px; margin-bottom: 20px; color: #0c5b5b; }
-    .home-content p { line-height: 1.8; margin-bottom: 25px; font-size: 16px; color: #444; }
-    .btn-wa { 
-      display: inline-block; 
-      padding: 15px 35px; 
-      background: #25D366; 
-      color: #000; 
-      text-decoration: none; 
-      border-radius: 50px; 
-      font-weight: bold; 
-      transition: 0.3s; 
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-    }
-    .btn-wa:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4); }
-
-    /* SERVICE SECTION */
-    .service-section { background: #0c5b5b; padding: 80px 20px; }
-    .service-title { color: #fff; text-align: center; margin-bottom: 50px; font-size: 28px; line-height: 1.4; }
-    .service-grid { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-    .service-card { 
-      text-align: center; 
-      color: #fff; 
-      background: rgba(255,255,255,0.05); 
-      padding: 25px; 
-      border-radius: 15px; 
-      transition: 0.3s;
-    }
-    .service-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-5px); }
-    .service-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
-    .service-card h3 { color: #ffc400; font-size: 14px; margin-bottom: 12px; letter-spacing: 0.5px; }
-    .service-card p { font-size: 13px; opacity: 0.9; line-height: 1.6; }
-
-    /* FOOTER / BANNER AREA (PERSIS GAMBAR) */
-    .footer-section { padding: 60px 20px; background: #f9f9f9; }
-    .main-wrapper { max-width: 1100px; margin: 0 auto; }
-    .banner-container { 
-      background-color: #FAF3E0; 
-      display: flex; 
-      position: relative; 
-      padding: 40px; 
-      border-radius: 10px; 
-      overflow: hidden; 
-      gap: 30px; 
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
       align-items: center;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-    }
-    .bg-map-overlay { 
-      position: absolute; 
-      inset: 0; 
-      background: url('https://upload.wikimedia.org/wikipedia/commons/a/a8/Map_of_Indonesia.svg') center/contain no-repeat; 
-      opacity: 0.04; 
-      z-index: 0;
-    }
-    .logo-footer { width: 130px; z-index: 1; }
-    .info-area { flex: 2; z-index: 1; }
-    .main-title { font-size: 20px; margin-bottom: 12px; color: #333; font-weight: bold; }
-    .city-list { font-size: 12px; margin-bottom: 25px; color: #666; line-height: 1.6; }
-    .bottom-info { display: flex; justify-content: space-between; gap: 20px; }
-    .label { font-weight: bold; font-size: 14px; margin-bottom: 5px; display: block; }
-    .desc, .phone { font-size: 13px; margin: 4px 0; color: #444; }
-    .other-loc { font-weight: bold; margin-top: 15px; font-size: 13px; }
-    
-    .social-details { text-align: center; }
-    .social-label { font-weight: bold; font-size: 13px; margin-bottom: 10px; }
-    .social-icons { display: flex; gap: 10px; }
-    .icon-circle { 
-      width: 35px; height: 35px; border-radius: 50%; 
-      display: flex; align-items: center; justify-content: center; 
-      color: #fff; text-decoration: none; font-size: 14px; transition: 0.3s;
-    }
-    .icon-circle:hover { opacity: 0.8; transform: scale(1.1); }
-    .fb { background: #3b5998; } .ig { background: #E1306C; } .tt { background: #000; }
-
-    /* MAP STYLING */
-    .map-area { flex: 1.2; z-index: 1; }
-    .map-wrapper { 
-      width: 100%; 
-      height: 180px; 
-      border: 4px solid #fff; 
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-      border-radius: 4px;
-    }
-    .map-wrapper a { display: block; width: 100%; height: 100%; }
-    .map-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-    .map-wrapper:hover .map-img { transform: scale(1.1); }
-
-    /* ANIMATIONS */
-    .fade-up { opacity: 0; transform: translateY(20px); animation: fup 0.8s forwards; }
-    .delay { animation-delay: 0.3s; }
-    @keyframes fup { to { opacity: 1; transform: translateY(0); } }
-
-    /* RESPONSIVE DESIGN */
-    @media (max-width: 992px) {
-      .service-grid { grid-template-columns: repeat(2, 1fr); }
-      .banner-container { flex-direction: column; text-align: center; padding: 30px; }
-      .bottom-info { flex-direction: column; align-items: center; text-align: center; }
-      .map-area { width: 100%; }
-      .map-wrapper { height: 250px; }
-    }
-
-    @media (max-width: 768px) {
-      .hamburger { display: block; }
-      .nav ul { 
-        position: absolute; top: 60px; left: 0; width: 100%; 
-        background: #0c5b5b; flex-direction: column; display: none; 
-        border-top: 1px solid rgba(255,255,255,0.1);
-      }
-      .nav ul.show { display: flex; }
-      .nav li { width: 100%; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-      .service-grid { grid-template-columns: 1fr; }
-      .home-content h2 { font-size: 28px; }
+      justify-content: space-between;
+      height: 100%;
     }
 
     .nav-left {
-  display: flex;
-  align-items: center;
-  padding-left: 15px;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .nav-mini-logo {
+      width: 35px;
+      height: 35px;
+      object-fit: contain;
+      margin-left: 10px;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .nav-mini-logo:hover {
+      transform: rotate(360deg);
+    }
+
+    .page-title {
+      color: #fff;
+      font-weight: bold;
+      margin-left: 10px;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    .nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav li {
+      padding: 0 25px;
+      height: 60px;
+      line-height: 60px;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .nav li:hover {
+      background: #c62828;
+    }
+
+    .wa-nav {
+      background: #25D366;
+    }
+
+    .wa-nav a {
+      text-decoration: none;
+      color: #000 !important;
+      font-weight: bold;
+      display: block;
+    }
+
+    /* --- HOME SECTION --- */
+    .home {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .logo-bg {
+      position: absolute;
+      z-index: -1;
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    .logo-bg img {
+      width: 500px;
+      filter: grayscale(100%);
+    }
+
+    .home-content {
+      max-width: 800px;
+    }
+
+    .home-content h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #0c5b5b;
+    }
+
+    .home-content p {
+      line-height: 1.8;
+      margin-bottom: 25px;
+      font-size: 16px;
+      color: #444;
+    }
+
+    .btn-wa {
+      display: inline-block;
+      padding: 15px 35px;
+      background: #25D366;
+      color: #000;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: bold;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-wa:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    /* --- SLIDER PRODUK --- */
+    :root {
+      --primary-color: #42401d;
+    }
+
+    .slider-container {
+      position: relative;
+      max-width: 1100px;
+      margin: 50px auto;
+      display: flex;
+      align-items: center;
+      padding: 0 50px;
+      cursor: pointer;
+    }
+
+    .slider-wrapper {
+      width: 100%;
+      overflow: hidden;
+      padding: 20px 0;
+    }
+
+    .card-track {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+      animation: fastIntro 1.5s ease-out;
+    }
+
+    .product-card-slide {
+      min-width: calc(25% - 15px);
+      box-sizing: border-box;
+      padding: 10px;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .product-card-slide:hover {
+      transform: scale(1.05);
+      z-index: 10;
+    }
+
+    .card-inner {
+      background: #ffffff;
+      border: 4px solid #081b16;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 10px 10px 0px #045b45;
+      transition: all 0.3s ease;
+    }
+
+    .product-card-slide:hover .card-inner {
+      box-shadow: 15px 15px 0px #03f4b8;
+      border-color: #045b45;
+    }
+
+    .card-inner img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 4px solid #000;
+      transition: transform 0.5s ease;
+    }
+
+    .product-card-slide:hover .card-inner img {
+      transform: scale(1.1);
+    }
+
+    .card-info {
+      padding: 20px;
+      color: #333;
+    }
+
+    .card-info h3 {
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #000;
+    }
+
+    .card-info p {
+      font-size: 14px;
+      line-height: 1.4;
+      color: #666;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #000;
+      z-index: 10;
+      transition: 0.3s;
+    }
+
+    .arrow:hover {
+      color: var(--primary-color);
+      transform: translateY(-50%) scale(1.2);
+    }
+
+    .left-arrow {
+      left: 0;
+    }
+
+    .right-arrow {
+      right: 0;
+    }
+
+    /* --- SERVICE SECTION --- */
+    .service-section {
+      background: #0c5b5b;
+      padding: 80px 20px;
+    }
+
+    .service-title {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 50px;
+      font-size: 28px;
+      line-height: 1.4;
+    }
+
+    .service-grid {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .service-card {
+      text-align: center;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 25px;
+      border-radius: 15px;
+      transition: 0.3s;
+    }
+
+    .service-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-5px);
+    }
+
+    .service-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .service-card h3 {
+      color: #ffc400;
+      font-size: 14px;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .service-card p {
+      font-size: 13px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    /* --- FOOTER & MAP --- */
+    .footer-section {
+      padding: 60px 20px;
+      background: #f9f9f9;
+    }
+
+    .footer-section p {
+      color: #000000 !important;
+    }
+
+    .address-details p,
+    .city-list {
+      color: #000000 !important;
+    }
+
+    .main-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .banner-container {
+      background-color: #FAF3E0;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      position: relative;
+      padding: 40px;
+      border-radius: 10px;
+      overflow: hidden;
+      gap: 30px;
+      align-items: flex-start;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .bg-map-overlay {
+      position: absolute;
+      inset: 0;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/a/a8/Map_of_Indonesia.svg') center/contain no-repeat;
+      opacity: 0.04;
+      z-index: 0;
+      pointer-events: none !important;
+    }
+
+    .logo-footer {
+      width: 130px;
+      z-index: 1;
+    }
+
+    .info-area {
+      flex: 2;
+      min-width: 300px;
+      z-index: 1;
+    }
+
+    .main-title {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .bottom-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .icon-circle {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .fb { background: #3b5998; }
+    .ig { background: #E1306C; }
+    .tt { background: #000; }
+
+    .map-area {
+      flex: 1.5;
+      min-width: 300px;
+      width: 100%;
+      z-index: 5;
+    }
+
+    .map-wrapper {
+      width: 100%;
+      height: 280px;
+      border: 4px solid #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      border-radius: 8px;
+      position: relative;
+      background: #ddd;
+      pointer-events: auto !important;
+      touch-action: auto;
+    }
+
+    .map-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      pointer-events: auto !important;
+    }
+
+    /* --- RESPONSIVE DESIGN --- */
+    @media (max-width: 992px) {
+      .banner-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .service-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .bottom-info {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav ul {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: #0c5b5b;
+        flex-direction: column;
+        display: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .nav ul.show {
+        display: flex;
+      }
+
+      .nav li {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .home-content h2 {
+        font-size: 28px;
+      }
+
+      .product-card-slide {
+        min-width: 100%;
+      }
+
+      .banner-container {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .map-wrapper {
+        height: 300px; 
+        pointer-events: auto !important;
+        touch-action: pan-x pan-y;
+      }
+
+      .map-wrapper iframe {
+        pointer-events: auto !important;
+      }
+
+      .bottom-info {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .social-icons {
+        justify-content: center;
+      }
+
+      .bg-map-overlay {
+        pointer-events: none;
+      }
+    }
+
+    @keyframes fastIntro {
+      0% { transform: translateX(150px); opacity: 0; }
+      60% { transform: translateX(-30px); opacity: 1; }
+      100% { transform: translateX(0); }
+    }
+
+    /* Footer Credit paling bawah */
+.footer-credit {
+    width: 100%;
+    padding: 15px 0;
+    background-color: #f1f1f1; /* Warna abu-abu sangat muda agar tidak mencolok */
+    text-align: center;
 }
 
-.nav-mini-logo {
-  width: 35px; /* Ukuran logo kecil */
-  height: 35px;
-  object-fit: contain;
-  margin-left: 10px; /* Jarak dari hamburger */
-  border-radius: 50%; /* Opsional: buat logo jadi bulat */
-  background: #ffffff00; /* Memberi latar belakang putih agar logo terlihat jelas */
-  padding: 2px;
-}
-
-.page-title {
-  color: #fff;
-  font-weight: bold;
-  margin-left: 10px; /* Jarak dari logo ke teks */
-  text-transform: uppercase;
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-    @media (max-width: 400px) {
-  .page-title {
-    font-size: 11px;
-  }
+.footer-credit p {
+    font-size: 11px; /* Ukuran teks kecil */
+    color: #888 !important; /* Warna teks pudar agar halus */
+    letter-spacing: 1px;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
 }
   </style>
 </head>
+
 <body>
 
   <header class="header">
     <div class="header-content">
-      <img src="img/Hunter Chiken Logo.png" alt="Hunter Chicken" class="header-logo" onerror="this.src='https://via.placeholder.com/220x80?text=HUNTER+CHICKEN'"/>
+      <img src="img/Hunter Chiken Logo.png" alt="Hunter Chicken" class="header-logo" onerror="this.src='https://via.placeholder.com/220x80?text=HUNTER+CHICKEN'" />
       <p>Supplier Ayam Segar & Terpercaya</p>
     </div>
   </header>
@@ -253,7 +618,7 @@
     <div class="nav-container">
       <div class="nav-left">
         <div class="hamburger" id="hamburger">☰</div>
-        <img src="img/Hunter Chiken Logo.png" alt="Mini Logo" class="nav-mini-logo" onerror="this.src='https://via.placeholder.com/30/0c5b5b/ffffff?text=H'">
+        <img src="img/Hunter Chiken Logo.png" alt="Mini Logo" class="nav-mini-logo" onerror="this.src='https://via.placeholder.com/30/ffffff/000000?text=H'">
         <span class="page-title" id="pageTitle">Hunter Chicken</span>
       </div>
       <ul id="navMenu">
@@ -261,7 +626,7 @@
         <li><a href="product.html" style="text-decoration: none; color: inherit; display: block;">Produk</a></li>
         <li onclick="location.href='#service'">Layanan</li>
         <li onclick="location.href='#footer'">Lokasi</li>
-        <li class="wa-nav"><a href="https://wa.me/6285778266727?text=Halo%20Hunter%20Chicken,%20saya%20ingin%20tanya%20stok%20ayam%20segar%20hari%20ini." target="_blank">Order WhatsApp</a></li>
+        <li class="wa-nav"><a href="https://wa.me/62895611707453?text=Halo%20saya%20ingin%20bertanya%20seputar%20produk%20Hunter%20Chicken." target="_blank">Call Center</a></li>
       </ul>
     </div>
   </nav>
@@ -270,40 +635,76 @@
     <div class="logo-bg">
       <img src="img/Hunter Chiken Logo.png" alt="Watermark" onerror="this.style.display='none'">
     </div>
-    <div class="home-content fade-up">
+    <div class="home-content">
       <h2>Ayam Segar Berkualitas</h2>
-      <p>
-        <b>Hunter Chicken</b> hadir sebagai solusi pasokan ayam yang andal, efisien, dan berkualitas tinggi. Kami berkomitmen menyediakan produk terbaik dengan sistem distribusi yang cepat, higienis, dan terpercaya untuk kebutuhan rumah tangga maupun usaha kuliner Anda.
-      </p>
-      <a href="https://wa.me/6285778266727?text=Halo%20Hunter%20Chicken,%20saya%20ingin%20tanya%20stok%20ayam%20segar%20hari%20ini." 
-   class="btn-wa" 
-   target="_blank">
-   Pesan Sekarang
-</a>    </div>
+      <p><b>Hunter Chicken</b> hadir sebagai solusi pasokan ayam yang andal, efisien, dan berkualitas tinggi untuk kebutuhan rumah tangga maupun usaha kuliner Anda.</p>
+      <p>Kami menyediakan ayam hidup dan ayam potong yang diproses secara higienis dengan standar kualitas tinggi, sehingga kesegaran dan keamanan produk selalu terjaga hingga sampai ke tangan pelanggan.</p>
+      <p>Didukung oleh sistem distribusi yang cepat dan terpercaya, <b>Hunter Chicken</b> berkomitmen menjadi mitra terbaik bagi pelanggan dengan pelayanan profesional, harga kompetitif, dan pasokan yang stabil setiap hari.</p>
+      <a href="product.html" class="btn-wa" target="_blank">Pesan Sekarang</a>
+    </div>
   </section>
 
+  <div class="slider-container">
+    <button class="arrow left-arrow" id="prevBtn">❮</button>
+    <div class="slider-wrapper">
+      <div class="card-track" id="cardTrack">
+        <div class="product-card-slide">
+          <div class="card-inner">
+            <img src="img/Hunter Chiken Logo.png" alt="Logo">
+            <div class="card-info"><h3>Logo Kami</h3><p>Kualitas daging Ayam premium untuk dikonsumsi.</p></div>
+          </div>
+        </div>
+        <div class="product-card-slide">
+          <div class="card-inner">
+            <img src="img/ayam1.png" alt="Daging">
+            <div class="card-info"><h3>Daging Pilihan</h3><p>Segar setiap hari langsung dari pemotongan.</p></div>
+          </div>
+        </div>
+        <div class="product-card-slide">
+          <div class="card-inner">
+            <img src="img/halal.png" alt="Halal">
+            <div class="card-info"><h3>100% HALAL</h3><p>Bersertifikat resmi dan higienis.</p></div>
+          </div>
+        </div>
+        <div class="product-card-slide">
+          <div class="card-inner">
+            <img src="img/indonesia.png" alt="Kirim">
+            <div class="card-info"><h3>Siap Kirim</h3><p>Menjangkau seluruh wilayah Jabodetabek.</p></div>
+          </div>
+        </div>
+        <div class="product-card-slide">
+          <div class="card-inner">
+            <img src="img/order.png" alt="Order">
+            <div class="card-info"><h3>Tanpa Min. Order</h3><p>Berapapun pesanan Anda, kami layani.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="arrow right-arrow" id="nextBtn">❯</button>
+  </div>
+
   <section class="service-section" id="service">
-    <h2 class="service-title">Pelayanan yang mempermudah <br> usaha kuliner anda</h2>
+    <h2 class="service-title">Pelayanan yang mempermudah <br> usaha kuliner Anda</h2>
     <div class="service-grid">
-      <div class="service-card fade-up">
-        <img src="img/ayam1.png" alt="Fresh" onerror="this.src='https://via.placeholder.com/300x200?text=Produk+Fresh'">
-        <h3>GARANSI PRODUK FRESH</h3>
-        <p>Jika produk kami tidak fresh & presisi, dapat diretur atau akan kami ganti baru!</p>
+      <div class="service-card">
+        <img src="img/garansi.png" alt="Fresh" onerror="this.src='https://via.placeholder.com/300x200?text=Fresh'">
+        <h3>GARANSI FRESH</h3>
+        <p>Produk tidak segar? Kami ganti baru!</p>
       </div>
-      <div class="service-card fade-up delay">
-        <img src="img/halal.png" alt="Halal" onerror="this.src='https://via.placeholder.com/300x200?text=Sertifikasi+Halal'">
-        <h3>SERTIFIKASI HALAL & NKV</h3>
-        <p>Seluruh proses produksi kami telah tersertifikasi Halal & NKV (A.S.U.H).</p>
+      <div class="service-card">
+        <img src="img/halal.png" alt="Halal" onerror="this.src='https://via.placeholder.com/300x200?text=Halal'">
+        <h3>SERTIFIKASI RESMI</h3>
+        <p>Halal & NKV (A.S.U.H).</p>
       </div>
-      <div class="service-card fade-up delay">
-        <img src="img/order.png" alt="Order" onerror="this.src='https://via.placeholder.com/300x200?text=Minimal+Order'">
+      <div class="service-card">
+        <img src="img/minimal.png" alt="Order" onerror="this.src='https://via.placeholder.com/300x200?text=Order'">
         <h3>MINIMAL ORDER RENDAH</h3>
-        <p>UMKM tidak perlu khawatir, beli jumlah kecil tetap dapat kualitas & harga terbaik.</p>
+        <p>Cocok untuk UMKM dan rumah tangga.</p>
       </div>
-      <div class="service-card fade-up delay">
-        <img src="img/fastrespon.png" alt="CS" onerror="this.src='https://via.placeholder.com/300x200?text=Fast+Respond'">
-        <h3>SERVICE FAST RESPOND</h3>
-        <p>Tim admin kami siap menangani pesanan dan keluhan Anda dengan sangat cepat.</p>
+      <div class="service-card">
+        <img src="img/call.png" alt="CS" onerror="this.src='https://via.placeholder.com/300x200?text=CS'">
+        <h3>FAST RESPOND</h3>
+        <p>Admin siap melayani pesanan Anda.</p>
       </div>
     </div>
   </section>
@@ -312,63 +713,87 @@
     <div class="main-wrapper">
       <div class="banner-container">
         <div class="bg-map-overlay"></div>
-        
         <div class="section">
           <img src="img/indonesia.png" alt="Logo" class="logo-footer" onerror="this.src='https://via.placeholder.com/130x130?text=LOGO'">
         </div>
-
         <div class="section info-area">
           <h2 class="main-title">Chicken Hunter Siap Kirim Ke Wilayah Lainnya</h2>
-          <p class="city-list">Jakarta, Bogor, Depok, Tangerang, Bekasi, Cilegon, Serang, Tasikmalaya, Ciamis, Garut, Bandung, Cianjur, Cirebon, Karawang, Sukabumi, Tegal</p>
-
+          <p class="city-list">Jakarta, Bogor, Depok, Tangerang, Bekasi, Cilegon, Serang, Bandung, dll.</p>
           <div class="bottom-info">
             <div class="address-details">
-              <span class="label">Alamat</span>
-              <p class="desc">Factory : Jl. Pendowo 1, Limo, Kota Depok, Jawa Barat</p>
-              <p class="phone"><strong>contact 1 :</strong> +62 857-7826-6727</p>
-              <p class="phone"><strong>contact 2 :</strong> +62 857-7826-6727</p>
-              <p class="other-loc">-> Other Location <-</p>
+              <span class="label" style="color:#000; font-weight:bold;">📍 Alamat</span>
+              <p class="desc">Factory: Jl. Pendowo 1, Limo, Kota Depok, Jawa Barat</p>
+              <p class="phone"><strong>WA 1:</strong> +62 857-7826-6727</p>
+              <p class="phone"><strong>WA 2:</strong> +62 857-7826-6727</p>
             </div>
-
             <div class="social-details">
-              <p class="social-label">Social Media</p>
+              <p class="social-label" style="color:#000; font-weight:bold;">Social Media</p>
               <div class="social-icons">
                 <a href="#" class="icon-circle fb"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" class="icon-circle ig"><i class="fab fa-instagram"></i></a>
                 <a href="#" class="icon-circle tt"><i class="fab fa-tiktok"></i></a>
-              </div> 
-              <!-- # = url / isi link sosmed -->
+              </div>
             </div>
           </div>
         </div>
 
         <div class="section map-area">
           <div class="map-wrapper">
-            <a href="https://www.google.com/maps/search/Jl.+Pendowo+1+Limo+Depok" target="_blank">
-              <img src="img/maps.png" alt="Lokasi Google Maps" class="map-img">
-            </a>
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.1793574181347!2d106.772596675039!3d-6.370845393619253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69efec39d5b761%3A0x67394595e69e3465!2sJl.%20Pendowo%20No.1%2C%20Limo%2C%20Kec.%20Limo%2C%20Kota%20Depok%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1703600000000!5m2!1sid!2sid" 
+              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
           </div>
         </div>
       </div>
     </div>
   </footer>
-
+  <div class="footer-credit">
+    <p>© 2025 Created by @fandyramadhan25_ / fun25r</p>
+</div>
   <script>
-    // Toggle Mobile Menu
     const hamburger = document.getElementById("hamburger");
     const navMenu = document.getElementById("navMenu");
+    hamburger.onclick = () => navMenu.classList.toggle("show");
 
-    hamburger.addEventListener("click", () => {
-      navMenu.classList.toggle("show");
-    });
+    const track = document.getElementById('cardTrack');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const speed = 3000;
+    let autoPlayInterval;
 
-    // Menutup menu saat link diklik (untuk mobile)
-    document.querySelectorAll('#navMenu li').forEach(item => {
-      item.addEventListener('click', () => {
-        navMenu.classList.remove('show');
-      });
-    });
+    function moveNext() {
+      const cardWidth = track.firstElementChild.offsetWidth + 20;
+      track.style.transition = "transform 0.5s ease-in-out";
+      track.style.transform = `translateX(-${cardWidth}px)`;
+      track.addEventListener('transitionend', function handler() {
+        track.style.transition = "none";
+        track.appendChild(track.firstElementChild);
+        track.style.transform = "translateX(0)";
+        track.removeEventListener('transitionend', handler);
+      }, { once: true });
+    }
+
+    function movePrev() {
+      const cardWidth = track.lastElementChild.offsetWidth + 20;
+      track.style.transition = "none";
+      track.prepend(track.lastElementChild);
+      track.style.transform = `translateX(-${cardWidth}px)`;
+      setTimeout(() => {
+        track.style.transition = "transform 0.5s ease-in-out";
+        track.style.transform = "translateX(0)";
+      }, 10);
+    }
+
+    function startAutoPlay() { autoPlayInterval = setInterval(moveNext, speed); }
+    function stopAutoPlay() { clearInterval(autoPlayInterval); }
+
+    nextBtn.onclick = () => { moveNext(); stopAutoPlay(); startAutoPlay(); };
+    prevBtn.onclick = () => { movePrev(); stopAutoPlay(); startAutoPlay(); };
+
+    document.querySelector('.slider-container').onmouseenter = stopAutoPlay;
+    document.querySelector('.slider-container').onmouseleave = startAutoPlay;
+    startAutoPlay();
   </script>
-
 </body>
 </html>
